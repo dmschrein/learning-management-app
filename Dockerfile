@@ -1,17 +1,20 @@
-# Node image
+# Use a Node.js base image
 FROM node:20-alpine
 
-# Set working directory inside the container
+# Set the working directory for the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json to install dependencies
-COPY package*.json ./
+# Copy and install client dependencies
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm install --legacy-peer-deps
+COPY client/ .
 
-# Install dependencies
-RUN npm install
+# Copy and install server dependencies
+WORKDIR /app/server
+COPY server/package*.json ./
+RUN npm install --legacy-peer-deps
+COPY server/ .
 
-# Copy the entire project to the working directory
-COPY . .
-
-# Run linting by default (can override this in `docker run` if needed)
-CMD ["npx", "eslint", "."]
+# Run the client linter (or another combined script as the default command)
+CMD ["npm", "run", "lint", "--prefix", "client"]

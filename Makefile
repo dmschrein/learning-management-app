@@ -1,23 +1,23 @@
-# Define variables for image name and tag
-IMAGE_NAME = learning-management-app
-DOCKERFILE = Dockerfile
+# Variables for client and server images
+CLIENT_IMAGE = learning-management-app-client
+SERVER_IMAGE = learning-management-app-server
 
-# Default target to build the Docker image
-.PHONY: build
-build:
-	docker build -t $(IMAGE_NAME) -f $(DOCKERFILE) .
+# Build client image
+.PHONY: build-client
+build-client:
+	docker build -t $(CLIENT_IMAGE) -f Dockerfile .
 
-# Run the linter using the built image
-.PHONY: lint
-lint:
-	docker run --rm $(IMAGE_NAME)
+# Build server image
+.PHONY: build-server
+build-server:
+	docker build -t $(SERVER_IMAGE) -f Dockerfile .
 
-# Clean up dangling images
-.PHONY: clean
-clean:
-	docker image prune -f
+# Lint client
+.PHONY: lint-client
+lint-client: build-client
+	docker run --rm $(CLIENT_IMAGE)
 
-# Remove the built Docker image
-.PHONY: remove-image
-remove-image:
-	docker rmi -f $(IMAGE_NAME)
+# Lint server (if needed)
+.PHONY: lint-server
+lint-server: build-server
+	docker run --rm $(SERVER_IMAGE)
