@@ -1,6 +1,13 @@
 "use client";
 
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+  DraggableProvidedDragHandleProps,
+  DraggableProvided,
+} from "@hello-pangea/dnd";
 import { Button } from "@/components/ui/button";
 import { Trash2, Edit, Plus, GripVertical } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/state/redux";
@@ -16,7 +23,7 @@ export default function DroppableComponent() {
   const dispatch = useAppDispatch();
   const { sections } = useAppSelector((state) => state.global.courseEditor);
 
-  const handleSectionDragEnd = (result: any) => {
+  const handleSectionDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     const startIndex = result.source.index;
@@ -28,7 +35,7 @@ export default function DroppableComponent() {
     dispatch(setSections(updatedSections));
   };
 
-  const handleChapterDragEnd = (result: any, sectionIndex: number) => {
+  const handleChapterDragEnd = (result: DropResult, sectionIndex: number) => {
     if (!result.destination) return;
 
     const startIndex = result.source.index;
@@ -142,7 +149,7 @@ const SectionHeader = ({
 }: {
   section: Section;
   sectionIndex: number;
-  dragHandleProps: any;
+  dragHandleProps: DraggableProvidedDragHandleProps | null;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -194,7 +201,7 @@ const ChapterItem = ({
   chapter: Chapter;
   chapterIndex: number;
   sectionIndex: number;
-  draggableProvider: any;
+  draggableProvider: DraggableProvided;
 }) => {
   const dispatch = useAppDispatch();
 

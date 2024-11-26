@@ -222,7 +222,7 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
 };
 interface MultiInputFieldProps {
   name: string;
-  control: any;
+  control: any; // eslint-disable-line
   placeholder?: string;
   inputClassName?: string;
 }
