@@ -1,7 +1,8 @@
 asset-download/
 
 # dependencies
-node_modules/
+**/node_modules/
+**/dist/
 client/node_modules/
 server/node_modules/
 client/public/
