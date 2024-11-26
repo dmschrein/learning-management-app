@@ -57,6 +57,10 @@ const Landing = () => {
 
   if (isLoading) return <LoadingSkeleton />;
 
+  if (isError) {
+    return <p>Failed to load courses. Please try again later.</p>;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
