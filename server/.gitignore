@@ -1,8 +1,19 @@
 
+# Ignore node_modules
 node_modules/
+
 # Keep environment variables out of version control
 .env
 
 # images
 src/assets
 public/
+
+
+# Ignore build/dist directories
+dist/
+
+# Ignore specific files
+.DS_Store
+*.log
+*.env
