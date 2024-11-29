@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 const SignUpComponent = () => {
   const { user } = useUser();
   const searchParams = useSearchParams();
-  const isCheckoutPage = searchParams.get("showSignUp") !== null;
+  const isCheckoutPage = searchParams.get("showSignUp") !== null; // if url showSignUp is not null, we're at the checkout page
   const courseId = searchParams.get("id");
 
   const signInUrl = isCheckoutPage

@@ -6,20 +6,24 @@ import { dark } from "@clerk/themes";
 import { useSearchParams } from "next/navigation";
 
 const SignInComponent = () => {
-  const { user } = useUser();
-  const searchParams = useSearchParams();
-  const isCheckoutPage = searchParams.get("showSignUp") !== null;
-  const courseId = searchParams.get("id");
+  const { user } = useUser(); // Hook to get the autheticated user
+  const searchParams = useSearchParams(); // Hook to retrieve query parameters from the URL
+  const isCheckoutPage = searchParams.get("showSignUp") !== null; // Check if the URL contains "showSignUp" (indicates we're in the checkout flow)
+  const courseId = searchParams.get("id"); //Extract the course ID from the query parameters
 
+  // Determine the sign-up URL based on whether it's a checkout page or not
   const signUpUrl = isCheckoutPage
-    ? `/checkout?step=1&id=${courseId}&showSignUp=true`
-    : "/signup";
+    ? `/checkout?step=1&id=${courseId}&showSignUp=true` // Checkout specific sign up flow
+    : "/signup"; // Default sign up flow
 
+  // Function to compute the redirec URL after signing in
   const getRedirectUrl = () => {
     if (isCheckoutPage) {
+      // Redirect to the next step in the checkout flow
       return `/checkout?step=2&id=${courseId}&showSignUp=true`;
     }
 
+    // Determine the redirect URL based on user type (e.g. "teacher" or general user)
     const userType = user?.publicMetadata?.userType as string;
     if (userType === "teacher") {
       return "/teacher/courses";
