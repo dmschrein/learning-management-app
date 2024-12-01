@@ -21,6 +21,7 @@ export default function DashboardLayout({
     pathname
   );
 
+  // handle use effect isCoursePage
   useEffect(() => {
     if (isCoursePage) {
       const match = pathname.match(/\/user\/courses\/([^\/]+)/);

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { clearInterval } from "timers";
 
 interface UseCarouselProps {
   totalImages: number;
@@ -17,7 +16,7 @@ export const useCarousel = ({
       setCurrentImage((prev) => (prev + 1) % totalImages);
     }, interval);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(timer); // Correctly clears the interval
   }, [totalImages, interval]);
 
   return currentImage;
